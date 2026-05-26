@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tesis extends Model
 {
-    protected $table = 'tesis'; // El plural de tesis es tesis
+    protected $table = 'tesis'; 
     protected $fillable = [
-        'titulo', 
-        'especializacion_id', 
-        'autor_id', 
-        'tutor_id', 
-        'ruta_pdf', 
-        'estado', 
+        'titulo',
+        'tipo_documento', 
+        'especializacion_id',
+        'autor_id',
+        'tutor_id',
+        'ruta_pdf',
+        'estado',
         'fecha_presentacion'
     ];
 

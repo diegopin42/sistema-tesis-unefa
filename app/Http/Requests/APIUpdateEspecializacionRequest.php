@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class APIUpdateEspecializacionRequest extends FormRequest
 {
@@ -13,16 +14,25 @@ class APIUpdateEspecializacionRequest extends FormRequest
 
     public function rules(): array
     {
-        // 1. Obtenemos el parámetro de la ruta. 
-        // Para 'especializaciones', Laravel usa 'especializacione' por defecto.
-        $parametro = $this->route('especializacione'); 
-
-        // 2. Nos aseguramos de tener el ID, ya sea que recibamos el objeto o solo el número
-        $id = is_object($parametro) ? $parametro->id : $parametro;
+        // Laravel permite obtener el ID directamente del parámetro de la ruta así:
+        $especializacionId = $this->route('especializacione');
+        $id = is_object($especializacionId) ? $especializacionId->id : $especializacionId;
 
         return [
-            // 3. Usamos la variable $id corregida aquí
-            'nombre' => 'required|string|max:255|unique:especializaciones,nombre,' . $id,
+            // Validamos que el nombre sea único, pero ignoramos el registro actual ($id)
+            'nombre' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('especializaciones', 'nombre')->ignore($id)
+            ],
+
+            // Añadimos la validación del tipo para posgrados
+            'tipo' => [
+                'required',
+                Rule::in(['especializacion', 'maestria', 'doctorado', 'postdoctorado'])
+            ],
+
             'carrera_id' => 'required|exists:carreras,id',
         ];
     }
@@ -30,7 +40,8 @@ class APIUpdateEspecializacionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.unique' => 'Esta especialización ya existe en el sistema.',
+            'nombre.unique' => 'Ya existe un programa con este nombre en el sistema.',
+            'tipo.in' => 'El tipo de posgrado seleccionado no es válido.',
             'carrera_id.exists' => 'La carrera seleccionada no es válida.',
         ];
     }

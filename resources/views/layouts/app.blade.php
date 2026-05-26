@@ -9,6 +9,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Alpine.js via Vite -->
+    @vite('resources/js/app.js')
     <style>
         :root {
             --azul-unefa: #003399;
@@ -102,6 +105,14 @@
             <a class="nav-link d-flex align-items-center" href="/personas">
               <img src="{{ asset('img/usuarios.png') }}" class="menu-icon me-3" alt="Personas">
               Autores y Tutores
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="{{ route('web.solicitudes.index') }}">
+              <span class="me-3 fs-5">📥</span>
+              Bandeja de Landing
+              <!-- Alpine badge indicando notificaciones (Opcional visual) -->
             </a>
           </li>
           

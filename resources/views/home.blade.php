@@ -5,8 +5,8 @@
     <div class="p-5 mb-5 bg-white rounded-4 shadow-sm border-start border-5 border-primary">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="display-4 fw-bold text-dark">Bienvenido al sistema de gestión de tesis</h1>
-                <p class="fs-5 text-muted">Sistema de Control de Estudios y Gestión de Tesis <br> 
+                <h1 class="display-4 fw-bold text-dark">Bienvenido al sistema de gestión de Biblioteca</h1>
+                <p class="fs-5 text-muted">Sistema de Control de Estudios y Gestión de Biblioteca <br> 
                    <span class="badge bg-unefa">UNEFA - Núcleo Caracas</span>
                 </p>
             </div>

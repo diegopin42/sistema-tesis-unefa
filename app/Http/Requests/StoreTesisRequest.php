@@ -22,18 +22,16 @@ class StoreTesisRequest extends FormRequest
     public function rules(): array
     {
     return [
-        'titulo'             => 'required|string|max:255',
-        'especializacion_id' => 'required|exists:especializaciones,id',
-        'autor_id'           => 'required|exists:personas,id',
-        'tutor_id'           => 'required|exists:personas,id',
-        'estado' => 'required|in:recibida,en_revision,aprobada,rechazada',       
-        'fecha_presentacion' => 'nullable|date',
+        'titulo' => 'required|string|max:500',
+        'resumen' => 'required|string',
+        'anio' => 'required|integer|min:2000|max:' . date('Y'),
+        'carrera_id' => 'required|exists:carreras,id',
+        'tutor_id' => 'required|exists:personas,id',
+        // Validamos que 'autores' sea un array y que cada ID exista en la tabla personas
+        'autores' => 'required|array|min:1',
+        'autores.*' => 'exists:personas,id',
         // Validación del archivo PDF
-    'ruta_pdf' => [
-    'required',
-    'file',
-    'mimes:pdf,doc,docx', // Agregamos los formatos de Word
-    'max:10240'           // Mantenemos el límite de 10MB
-],    ];
+        'pdf_archivo' => 'required|file|mimes:pdf|max:10240', // Máximo 10MB
+    ];
     }
 }

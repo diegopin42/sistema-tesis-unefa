@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-    Schema::create('especializaciones', function (Blueprint $table) {
-        $table->id();
-        $table->string('nombre'); 
-        // Apunta a la tabla carreras
-        $table->foreignId('carrera_id')->constrained('carreras')->onDelete('cascade');
-        $table->timestamps();
-    });
+        Schema::table('tesis', function (Blueprint $table) {
+            //
+        });
     }
 
     /**
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('especializaciones');
+        Schema::table('tesis', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\TesisWebController; // <-- Importante para tu nueva ruta
 
 // Importar todos los modelos necesarios
 use App\Models\Sede;
@@ -15,18 +16,23 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Bandeja de Solicitudes (SPA/Cliente)
+Route::get('/solicitudes', function () {
+    return view('solicitudes.index');
+})->name('web.solicitudes.index');
+
+Route::get('/dashboard', function () {
+    return view('home');
+})->name('home');
+
 // --- Gestión de Tesis (Ruta Principal) ---
-Route::get('/tesis', function () {
-    // Eager loading para evitar lentitud
-    $tesis = Tesis::with(['autor', 'tutor', 'especializacion.carrera.sede'])->latest()->get();
-    
-    // Datos para los selectores del modal
-    $especializaciones = Especializacion::with('carrera')->get();
-    $personas = Persona::all(); 
+// Aquí está tu nueva ruta limpia conectada a tu TesisWebController
 
-    return view('tesis.index', compact('tesis', 'especializaciones', 'personas'));
-})->name('web.tesis.index');
-
+Route::prefix('tesis')->group(function () {
+    Route::get('/', [TesisWebController::class, 'index'])->name('web.tesis.index');
+    Route::get('/crear', [TesisWebController::class, 'create'])->name('web.tesis.create');
+    Route::post('/guardar', [TesisWebController::class, 'store'])->name('web.tesis.store');
+});
 // --- Gestión de Personas ---
 Route::get('/personas', function () {
     $personas = Persona::all();
@@ -35,7 +41,7 @@ Route::get('/personas', function () {
 
 // --- Grupo de Configuración ---
 Route::prefix('configuracion')->group(function () {
-    
+
     // Panel Principal (localhost:8000/configuracion)
     Route::get('/', [ConfiguracionController::class, 'index'])->name('configuracion.index');
 
@@ -59,4 +65,4 @@ Route::prefix('configuracion')->group(function () {
         return view('configuracion.especializaciones.index', compact('especializaciones', 'carreras'));
     })->name('web.especializaciones.index');
 
-});
+}); 

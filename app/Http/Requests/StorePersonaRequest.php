@@ -22,22 +22,10 @@ class StorePersonaRequest extends FormRequest
     public function rules(): array
     {
     return [
-        'nombre'    => 'required|string|min:2|max:50',
-        'apellidos' => 'required|string|min:2|max:50',
-        // La cédula debe ser única en la tabla 'personas'
-        'cedula'    => 'required|string|unique:personas,cedula|max:15',
-        // Validamos que el rol sea uno de los permitidos
-        // En StorePersonaRequest.php
-'rol' => 'required|in:estudiante,tutor,jurado,administrador',
+        'nombre' => 'required|string|max:100',
+        'apellidos' => 'required|string|max:100',
+        'cedula' => 'required|string|unique:personas,cedula|max:20', // Clave: única en la tabla
+        'rol' => 'required|in:autor,tutor,ambos',
     ];
     }
-
-    public function messages(): array
-{
-    return [
-        'cedula.unique' => 'Esta cédula ya se encuentra registrada en el sistema.',
-        'rol.in'        => 'El rol seleccionado no es válido.',
-    ];
 }
-}
-

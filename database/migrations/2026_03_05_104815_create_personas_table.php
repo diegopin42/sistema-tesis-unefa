@@ -10,16 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
+    {
     Schema::create('personas', function (Blueprint $table) {
         $table->id();
         $table->string('nombre');
         $table->string('apellidos');
         $table->string('cedula')->unique(); // Evita cédulas duplicadas
-        $table->enum('rol', ['estudiante', 'tutor', 'jurado', 'administrador'])->default('estudiante');
+        $table->enum('rol', ['autor', 'tutor', 'ambos'])->default('autor');
         $table->timestamps();
     });
-}
+    }
 
     /**
      * Reverse the migrations.

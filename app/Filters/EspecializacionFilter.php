@@ -6,7 +6,8 @@ class EspecializacionFilter extends ApiFilter
 {
     protected $safeParams = [
         'nombre' => ['eq', 'lk'],
-        'carreraId' => ['eq'], // Para filtrar especializaciones de una carrera específica
+        'carreraId' => ['eq'],
+        'tipo' => ['eq'],
     ];
 
     protected $columnMap = [
